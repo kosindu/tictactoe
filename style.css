@@ -1,0 +1,129 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --cell-size: 100px;
+  --mark-size: calc(var(--cell-size) * 0.8);
+  --main-font-size: 60px;
+}
+
+body {
+  margin: 0;
+  background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--main-font-size);
+}
+
+.playground {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px;
+}
+
+.cell {
+  cursor: pointer;
+  position: relative;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+.cell.cross,
+.cell.circle {
+  cursor: not-allowed;
+}
+
+.cell.cross::before,
+.cell.cross::after,
+.playground.cross .cell:not(.cross):not(.circle):hover::before,
+.playground.cross .cell:not(.cross):not(.circle):hover::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  border-radius: 5px;
+  background-color: #ccc;
+}
+
+.cell.cross::before,
+.cell.cross::after {
+  background-color: red;
+}
+
+.cell.cross::before,
+.playground.cross .cell:hover::before {
+  transform: rotate(45deg);
+}
+
+.cell.cross::after,
+.playground.cross .cell:hover::after {
+  transform: rotate(-45deg);
+}
+
+.cell.circle::before,
+.playground.circle .cell:not(.cross):not(.circle):hover::before {
+  content: '';
+  position: absolute;
+  width: var(--mark-size);
+  height: var(--mark-size);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  border: 5px solid #ccc;
+  border-radius: 50%;
+}
+
+.cell.circle::before {
+  border-color: green;
+}
+
+.winners-modal {
+  display: none;
+  /* display: flex; */
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  color: #eee;
+  background-color: rgba(0, 0, 0, 0.9);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.winners-modal.show {
+  display: flex;
+}
+
+#restart {
+  cursor: pointer;
+  padding: 10px 100px;
+  border: 2px solid #333;
+  background-color: #ccc;
+  border-radius: 5px;
+}
+
+#restart:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0px #555;
+}
